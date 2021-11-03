@@ -12,20 +12,18 @@ La partita termina quando il giocatore clicca su una bomba
 o raggiunge il numero massimo possibile di numeri consentiti.
 Al termine della partita il software deve scoprire tutte le bombe e comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato un quadratino con un numero consentito. (quindi se ci pensate dovrete tenere traccia del punteggio). */
 
-// 1. Generare 16 numeri casuali nello stesso range della difficoltà prescelta..
-// 1.2 creare array numeri casuali pc vuota
-// 1.3 check numeri generati = numeri già presenti nell array.
-
-// 2. inserire i numeri generati dal pc nella nostra griglia
-    // il numero generato, lo sostituisco al suo relativo  i, aggiungo una classe che ne va a definire appunto il suo stato...
+/*
 
 
-// 3. l utente in seguito potrà cliccare su ogni cella
-// 3.1 se l utente clicca sulla cella senza bomba, prosegue 
-// 3.2 creo variabile somma che tiene conto di quante volte l utente ha cliccato la cella senza bomba
-// finchè
-// 4 se clicca sulla classe in cui è attiva la classe "bomba", la cella si colora di rosso 
-// 4.1 Input relativo alla fine del gioco (hai perso) e del punteggio ottenuto ed eseguo l output su tutte le bombe presenti nel gioco 
+1 leggiamo il prompt
+2 creare una griglia in base al numero di celle da usare => funzione
+3 creare un array con le bombe => funzione
+4 intercettare il click dell'utente su una cella => listener
+4.1 se l'indice della cella è presente all'interno dell'array => for / if
+4.2 hai perso => console.log
+
+
+*/
 
 
 
@@ -52,63 +50,81 @@ while (sceltaDifficolta !== 1 && sceltaDifficolta !== 2 && sceltaDifficolta !== 
 // difficoltà 1 
 if ( sceltaDifficolta === 1 ) {
     numeroBlocchi = 100;
+    bombePosition = numRandom(numeroBlocchi);
     // baseClass = "square_easy";  
-    generateGrid(100,"square_easy") 
+    generateGrid(100,"square_easy", bombePosition) 
 
 }
 
 // difficoltà 2
 if ( sceltaDifficolta === 2 ) {
     numeroBlocchi = 81;
+    bombePosition = numRandom(numeroBlocchi);
     // baseClass = "square_medium";
-    generateGrid(81,"square_medium") 
+    generateGrid(81,"square_medium", bombePosition) 
 
 }
 
 // difficoltà 3 
 if ( sceltaDifficolta === 3 ) {
     numeroBlocchi = 49;
+    bombePosition = numRandom(numeroBlocchi);
     // baseClass = "square_extreme";   
-    generateGrid(49,"square_extreme") 
+    generateGrid(49,"square_extreme", bombePosition) 
 }
 
-while (bombePosition.length !== 16){
-    let numeroGenerato = Math.floor(Math.random()*numeroBlocchi)+1 ;
-    let duplicato = false;
-    for(let i=0; i < bombePosition.length; i++) {
-        if (bombePosition[i] === numeroGenerato) {
-            duplicato = true;
+
+
+function numRandom(numeroBlocchi){
+
+
+    let bombePosition = [];
+    while (bombePosition.length !== 16){
+        let numeroGenerato = Math.floor(Math.random()*numeroBlocchi) + 1;
+        if (bombePosition.includes(numeroGenerato) !== true) {
+            bombePosition.push(numeroGenerato);
         }
+        
     }
-    if (!duplicato){
-        bombePosition.push(numeroGenerato);
-    }
-    
+
+    return bombePosition;
 }
 
 
-function generateGrid(numeroBlocchi,baseClass){
+function generateGrid(numeroBlocchi,baseClass, bombePosition){
+
+ 
     for ( let i = 1; i <= numeroBlocchi; i++) {
         squareElement = document.createElement("div");
         squareElement.classList.add(baseClass);
-        squareElement.setAttribute("id", i);
-        let numeroI = squareElement.getAttribute("id");
-        if ( bombePosition.includes(numeroI)){
-            // squareElement.classList.add("bomba")
-            console.log("vero");
+        squareElement.id = i;
+
+   
+        // console.log(prova);
+        if (bombePosition.includes(i)){
+            squareElement.classList.add("bomba")
         }
+
+        
         // console.log(numeroI);
 
         containerSquare.append(squareElement);
+
         // 3
-        squareElement.addEventListener("click",
-            function(){
-                this.classList.add("active");
-                this.innerHTML = i;
+        // let bombs = document.getElementsByClassName("bomba")
+        // console.log(bombs);
+       
+
+        squareElement.addEventListener("click", function() {
+            let punteggio = 
+            this.classList.add("active");
+            let id = parseInt(this.id);
+            this.innerHTML = id;
+            if (bombePosition.includes(id)) {
+                this.classList.add("active_bomba");
+                alert("hai perso!")
+            }
                 
-            }   
-    
-        )
+        });
     }
 }
-

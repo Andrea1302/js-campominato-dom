@@ -60,9 +60,9 @@ h1{
 
 /* classe bomba  */
 .bomba{
-    background-color: red;
+
     
 }
 .active_bomba{
-    background-color: green;
+    background-color: red;
 }
