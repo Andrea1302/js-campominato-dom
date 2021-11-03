@@ -1,0 +1,58 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(5,61,72,1) 37%, rgba(250,62,62,1) 87%, rgba(167,182,0,1) 100%, rgba(147,12,12,1) 100%);
+}
+/* Regole generali container principale */
+#container{
+    width: 80%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+
+h1{
+    text-align: center;
+    font-size: 50px;
+    color: white;
+    margin-top: 20px;
+}
+
+/* Regole container_square */
+#container_square{
+    width: 500px;
+    height: 500px;
+    border: 5px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* regole square easy */
+.square_easy{
+    width: calc( 100% / 10 );
+    height: calc( 100% / 10 );
+    border: 1px solid black;
+}
+
+/* Regole square medium  */
+.square_medium{
+    width: calc( 100% / 9 );
+    height: calc( 100% / 9 );
+    border: 1px solid black;
+}
+
+/* Regole square extreme */
+.square_extreme{
+    width: calc( 100% / 7 );
+    height: calc( 100% / 7 );
+    border: 1px solid black;
+}
+
+
+/* al click  */
+.active{
+    background-color: cyan;
+}
