@@ -56,3 +56,13 @@ h1{
 .active{
     background-color: cyan;
 }
+
+
+/* classe bomba  */
+.bomba{
+    background-color: red;
+    
+}
+.active_bomba{
+    background-color: green;
+}

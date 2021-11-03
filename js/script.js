@@ -35,7 +35,7 @@ const containerSquare = document.getElementById("container_square");
 const bottonEasy = document.getElementById("easy");
 const bottonMedium = document.getElementById("medium");
 const bottonHard = document.getElementById("hard");
-
+let bombePosition = [];
 
 
 // 1.
@@ -51,7 +51,7 @@ while (sceltaDifficolta !== 1 && sceltaDifficolta !== 2 && sceltaDifficolta !== 
 
 // difficoltà 1 
 if ( sceltaDifficolta === 1 ) {
-    // numeroBlocchi = 100;
+    numeroBlocchi = 100;
     // baseClass = "square_easy";  
     generateGrid(100,"square_easy") 
 
@@ -59,7 +59,7 @@ if ( sceltaDifficolta === 1 ) {
 
 // difficoltà 2
 if ( sceltaDifficolta === 2 ) {
-    // numeroBlocchi = 81;
+    numeroBlocchi = 81;
     // baseClass = "square_medium";
     generateGrid(81,"square_medium") 
 
@@ -67,22 +67,48 @@ if ( sceltaDifficolta === 2 ) {
 
 // difficoltà 3 
 if ( sceltaDifficolta === 3 ) {
-    // numeroBlocchi = 49;
+    numeroBlocchi = 49;
     // baseClass = "square_extreme";   
     generateGrid(49,"square_extreme") 
 }
+
+while (bombePosition.length !== 16){
+    let numeroGenerato = Math.floor(Math.random()*numeroBlocchi)+1 ;
+    let duplicato = false;
+    for(let i=0; i < bombePosition.length; i++) {
+        if (bombePosition[i] === numeroGenerato) {
+            duplicato = true;
+        }
+    }
+    if (!duplicato){
+        bombePosition.push(numeroGenerato);
+    }
+    
+}
+
+
 function generateGrid(numeroBlocchi,baseClass){
     for ( let i = 1; i <= numeroBlocchi; i++) {
         squareElement = document.createElement("div");
-        squareElement.classList.add(baseClass)
+        squareElement.classList.add(baseClass);
+        squareElement.setAttribute("id", i);
+        let numeroI = squareElement.getAttribute("id");
+        if ( bombePosition.includes(numeroI)){
+            // squareElement.classList.add("bomba")
+            console.log("vero");
+        }
+        // console.log(numeroI);
+
         containerSquare.append(squareElement);
         // 3
         squareElement.addEventListener("click",
             function(){
                 this.classList.add("active");
                 this.innerHTML = i;
+                
             }   
     
         )
     }
 }
+
